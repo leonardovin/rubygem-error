@@ -1,0 +1,29 @@
+name: Bundle Install
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch if it's not 'main'
+  pull_request:
+
+jobs:
+  bundle-install:
+    runs-on: windows-latest  # Use the Windows runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7.6
+
+    - name: Install Bundler
+      run: |
+        gem install bundler -v 2.3.16
+        refreshenv  # Refresh the environment variables to make Bundler available
+
+    - name: Bundle Install
+      run: |
+        bundle install
